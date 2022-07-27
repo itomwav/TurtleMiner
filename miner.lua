@@ -1,5 +1,7 @@
 xh,yh = 0,0
 
+--test
+
 function goFarm(x, y)
 	if y == 0 then
 	for i=1, 16 * (x - 1) + 15 do
