@@ -1,5 +1,5 @@
 function get(file)
-shell.run("rm", file..".lua")
+shell.run("rm", file)
 shell.run("wget", "https://github.com/itomwav/TurtleMiner/raw/main/"..file)
 end
 

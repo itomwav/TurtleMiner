@@ -193,10 +193,10 @@ end
 
 function forward(mode) --safe, mine, torch
  going = true
- if mode == mine or mode == torch then
+ if mode == "mine" or mode == "torch" then
  turtle.digUp()
  turtle.digDown()
- if mode == torch then
+ if mode == "torch" then
 	turtle.select(2)
 	turtle.placeDown()
 	turtle.select(1)
@@ -206,7 +206,7 @@ end
   if turtle.forward() then
    going = false
   else 
-   if mode == safe or mode == mine or mode == torch then
+   if mode == "safe" or mode == "mine" or mode == "torch" then
 	turtle.dig()
    end
   end
