@@ -1,38 +1,38 @@
-xh,yh = 0,0
-
---test
+local params = {...}
+xh = tonumber(params[1])
+yh = tonumber(params[2])
 
 function goFarm(x, y)
 	if y == 0 then
 	for i=1, 16 * (x - 1) + 15 do
-	turtle.forward()
+	forward(go)
 	end
 	turtle.down()
-	digStraight(true)
+	forward(safe)
 	else
 	for i=1, 16 * x do
-	turtle.forward()
+	forward(go)
 	end
 	end
 	
 	if y < 0 then
 	turtle.turnLeft()
 	for i=1, 16 * (math.abs(y)-1) do
-	turtle.forward()
+	forward(go)
 	print(i)
 	end
 	turtle.down()
-	digStraight(true)
+	forward(safe)
 	elseif y > 0 then
 	for i=1, 15 do
-	turtle.forward()
+	forward(go)
 	end
 	turtle.turnRight()
 	for i=1, 16 * math.abs(y) - 1 do
-	turtle.forward()
+	forward(go)
 	end
 	turtle.down()
-	digStraight(true)
+	forward(safe)
 	end
 	
 end
@@ -41,30 +41,30 @@ function returnFarm(x,y)
 	if y == 0 then
 	turtle.turnLeft()
 	for i=1, 15 do
-	turtle.forward()
+	forward(go)
 	end
 	turtle.turnRight()
 	for i=1, 16 * (x-1) + 15 do
-	turtle.forward()
+	forward(go)
 	end	
 	elseif y < 0 then
 	for i=1, 16 * math.abs(y) - 1 do
-	turtle.forward()
+	forward(go)
 	print(i)
 	end
 	turtle.turnRight()
 	elseif y > 0 then
 	for i=1, 16 * (math.abs(y) - 1) do
-	turtle.forward()
+	forward(go)
 	end
 	turtle.turnLeft()
 	for i=1, 15 do
-	turtle.forward()
+	forward(go)
 	end
 	end
 	if y ~= 0 then
 	for i=1, 16 * x do
-	turtle.forward()
+	forward(go)
 	end
 	end
 end
@@ -83,16 +83,20 @@ end
 function endFarm()
 	
 	turtle.turnRight()
-	digStraight()
+	forward(mine)
 	for i=1,14 do
-	turtle.forward()
+	forward(go)
 	end
 	turtle.turnLeft()
 	fillChest()
-	turtle.dig()
-	turtle.forward()
-	turtle.up()
-	
+
+--	turtle.dig()
+--	forward(go)
+--	turtle.up()
+
+turtle.up()
+forward(go)
+
 end
 
 
@@ -113,52 +117,48 @@ end
 	
 end
 
-
-------------------------------------------------------
 function farmLine()
 	
 for i=1,15 do --eigentliche länge 15
-	digStraight()
+	forward(mine)
 end
 
 	turtle.turnRight()
-	digStraight()
+	forward(mine)
 	turtle.turnRight()
 
 for i=1,15 do
-	digStraight()
+	forward(mine)
 end
-	
 
 end
 
 function farmLineTorch(invert)
-
 	
 if invert then
 for i=1,15 do --eigentliche länge 15
 	if i == 4 or i == 8 or i == 12 or i == 16 then
-	digStraightTorch()
+	forward(torch)
 	else 
-	digStraight()
+	forward(mine)
 	end
 end
 else
 for i=1,15 do --eigentliche länge 15
 	if i == 1 or i == 5 or i == 9 or i == 13 then
-	digStraightTorch()
+	forward(torch)
 	else 
-	digStraight()
+	forward(mine)
 	end
 end
 end
 
 	turtle.turnRight()
-	digStraight()
+	forward(mine)
 	turtle.turnRight()
 
 for i=1,15 do
-	digStraight()
+	forward(mine)
 end
 	
 
@@ -169,7 +169,7 @@ function endLine()
 	k = k + 2
 	turtle.turnRight()
 for i=1,k - 1 do
-	turtle.forward()	
+	forward(go)	
 end
 	turtle.turnLeft()
 		
@@ -177,9 +177,9 @@ fillChest()
 		
 	turtle.turnLeft()
 for i=1,k - 1 do
-	turtle.forward()
+	forward(go)
 end
-	digStraight()
+	forward(mine)
 	turtle.turnLeft()
 end
 
@@ -191,37 +191,28 @@ end
 	turtle.select(1)
 end
 
-function digStraight(safe)
+function forward(mode) --safe, mine, torch
  going = true
- if not safe then
+ if mode == mine or mode == torch then
  turtle.digUp()
  turtle.digDown()
+ if mode == torch then
+	turtle.select(2)
+	turtle.placeDown()
+	turtle.select(1)
+ end
  end
  while going do
   if turtle.forward() then
    going = false
   else 
-   turtle.dig()
+   if mode == safe or mode == mine or mode == torch then
+	turtle.dig()
+   end
   end
  end
 end
 				
-function digStraightTorch()
- going = true
- turtle.digUp()
- turtle.digDown()
- turtle.select(2)
- turtle.placeDown()
- turtle.select(1)
- while going do
-  if turtle.forward() then
-   going = false
-  else 
-   turtle.dig()
-  end
- end
-end
-
 goFarm(xh,yh)
 startFarm()
 farm(yh < 0)
