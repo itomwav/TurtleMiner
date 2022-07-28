@@ -2,42 +2,51 @@ local params = {...}
 xh = tonumber(params[1])
 yh = tonumber(params[2])
 
-function.return(c,s,r)
+function returnTurtle(c,s,r)
 
 turtle.turnRight()
-forward(go)
-empty("stone")
 for i=1,c do
 forward(go)
+end
+empty("stone")
+for i=1,s-c do
+forward("go")
 end
 turtle.turnRight()
 empty("cobble")
 turtle.turnLeft()
-for i=1,s-c do
-forward(go)
+for i=1,r-s do
+forward("go")
 end
 empty()
-for i=1,r-s do
-forward(go)
+for i=1,16-(c+s+r) do
+forward("go")
 end
 turtle.turnRight()
 end
 
-function.empty(type)
+function empty(type)
 
 for i=1,14 do
-turtle.select(i)
-local data = turtle.getItemDetail()
-if type == "cobble" then
-if data.name == "minecraft:cobblestone" then
-turtle.drop()
-end
-else if type == "stone"
-if data.name == "minecraft:stone" then
-turtle.dropDown()
-end
-else 
-turtle.dropDown()
+	turtle.select(i)
+	
+	if type == "cobble" then
+		local data = turtle.getItemDetail()
+		if data then
+		if data.name == "minecraft:cobblestone" then
+		turtle.drop()
+		end
+		end
+	else if type == "stone" then
+		data = turtle.getItemDetail()
+		if data then
+		if data.name == "minecraft:stone" then
+		turtle.dropDown()
+		end
+		end
+	else 
+		turtle.dropDown()
+	end
 end
 
 end
@@ -260,4 +269,4 @@ startFarm()
 farm(yh < 0)
 endFarm()
 returnFarm(xh,yh)
-return(2,11,14)
+returnTurtle(2,11,14)
