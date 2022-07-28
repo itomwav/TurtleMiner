@@ -2,6 +2,46 @@ local params = {...}
 xh = tonumber(params[1])
 yh = tonumber(params[2])
 
+function.return(c,s,r)
+
+turtle.turnRight()
+forward(go)
+empty("stone")
+for i=1,c do
+forward(go)
+end
+turtle.turnRight()
+empty("cobble")
+turtle.turnLeft()
+for i=1,s-c do
+forward(go)
+end
+empty()
+for i=1,r-s do
+forward(go)
+end
+turtle.turnRight()
+end
+
+function.empty(type)
+
+for i=1,14 do
+turtle.select(i)
+local data = turtle.getItemDetail()
+if type == "cobble" then
+if data.name == "minecraft:cobblestone" then
+turtle.drop()
+end
+else if type == "stone"
+if data.name == "minecraft:stone" then
+turtle.dropDown()
+end
+else 
+turtle.dropDown()
+end
+
+end
+
 function goFarm(x, y)
 	if y == 0 then
 	for i=1, 16 * (x - 1) + 15 do
@@ -74,7 +114,9 @@ function startFarm()
 	turtle.select(1)
 	turtle.turnRight()
 	turtle.turnRight()
+	turtle.select(15)
 	turtle.place()
+	turtle.select(1)
 	turtle.turnLeft()
 	turtle.turnLeft()
 	
@@ -184,7 +226,7 @@ end
 end
 
 function fillChest()
-for i=3,16 do
+for i=1,14 do
 	turtle.select(i)
 	turtle.drop()
 end
@@ -197,7 +239,7 @@ function forward(mode) --safe, mine, torch
  turtle.digUp()
  turtle.digDown()
  if mode == "torch" then
-	turtle.select(2)
+	turtle.select(16)
 	turtle.placeDown()
 	turtle.select(1)
  end
@@ -218,3 +260,4 @@ startFarm()
 farm(yh < 0)
 endFarm()
 returnFarm(xh,yh)
+return(2,11,14)
