@@ -19,7 +19,7 @@ for i=1,r-s do
 forward("go")
 end
 empty()
-for i=1,16-r do
+for i=1,15-r do
 forward("go")
 end
 turtle.turnRight()
@@ -48,7 +48,7 @@ for i=1,14 do
 		turtle.dropDown()
 	end
 end
-
+end
 end
 
 function goFarm(x, y)
@@ -269,4 +269,4 @@ startFarm()
 farm(yh < 0)
 endFarm()
 returnFarm(xh,yh)
-returnTurtle(1,11,14)
+returnTurtle(1,11,13)
