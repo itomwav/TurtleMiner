@@ -38,7 +38,7 @@ for i=1,r-s do
 forward("go")
 end
 empty()
-for i=1,lengthX-1-r do
+for i=1,lengthY-1-r do
 forward("go")
 end
 turtle.turnRight()
@@ -188,7 +188,7 @@ end
 
 function farmLine()
 	
-for i=1,lengthY-1 do --eigentliche länge 15
+for i=1,lengthX-1 do --eigentliche länge 15
 	forward("mine")
 end
 
@@ -196,7 +196,7 @@ end
 	forward("mine")
 	turtle.turnRight()
 
-for i=1,lengthY-1 do
+for i=1,lengthX-1 do
 	forward("mine")
 end
 
@@ -205,7 +205,7 @@ end
 function farmLineTorch(invert)
 	
 if invert then
-for i=1,lengthY-1 do --eigentliche länge 15
+for i=1,lengthX-1 do --eigentliche länge 15
 	if i % 4 == 0 then -- i == 4 or i == 8 or i == 12 or i == 16
 	forward("torch")
 	else 
@@ -213,7 +213,7 @@ for i=1,lengthY-1 do --eigentliche länge 15
 	end
 end
 else
-for i=1,lengthY-1 do --eigentliche länge 15
+for i=1,lengthX-1 do --eigentliche länge 15
 	if (i+3) % 4 == 0 then -- i == 1 or i == 5 or i == 9 or i == 13
 	forward("torch")
 	else 
@@ -226,7 +226,7 @@ end
 	forward("mine")
 	turtle.turnRight()
 
-for i=1,lengthY-1 do
+for i=1,lengthX-1 do
 	forward("mine")
 end
 	
