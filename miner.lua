@@ -3,8 +3,19 @@ lengthY = 16
 
 local params = {...}
 if params[1] == "custom" then
+	if math.abs(tonumber(params[2])) % 4 ~= 0 then
 	lengthX = math.abs(tonumber(params[2]))+(4-math.abs(tonumber(params[2])) % 4)
+	else 
+	lengthX = math.abs(tonumber(params[2]))
+	end
+	if math.abs(tonumber(params[3])) % 4 ~= 0 then
 	lengthY = math.abs(tonumber(params[3]))+(4-math.abs(tonumber(params[3])) % 4)
+	else 
+	lengthY = math.abs(tonumber(params[3]))
+	end
+	print("Mining: X="..lengthX)
+	print("        Y="..lengthY)
+
 else
 	xh = tonumber(params[1])
 	yh = tonumber(params[2])
@@ -97,7 +108,7 @@ end
 function returnFarm(x,y)
 	if y == 0 then
 	turtle.turnLeft()
-	for i=1, lenghtY-1 do
+	for i=1, lengthY-1 do
 	forward("go")
 	end
 	turtle.turnRight()
@@ -142,7 +153,7 @@ function endFarm()
 	
 	turtle.turnRight()
 	forward("mine")
-	for i=1,14 do
+	for i=1,lengthY-2 do
 	forward("go")
 	end
 	turtle.turnLeft()
@@ -162,7 +173,7 @@ function farm(invert)
 
 	k=0
 	
-for i=1,lenghtY/4-1 do
+for i=1,lengthY/4-1 do
 	farmLineTorch(invert)
 	endLine()
 	farmLine()
@@ -274,7 +285,7 @@ end
 if params[1] == "custom" then
 
 	startFarm()
-	farm()
+	farm(false)
 	endFarm()
 
 else 
