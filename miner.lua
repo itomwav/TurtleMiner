@@ -3,8 +3,8 @@ lengthY = 16
 
 local params = {...}
 if params[1] == "custom" then
-	lengthX = tonumber(params[2])
-	lengthY = tonumber(params[3])
+	lengthX = math.abs(tonumber(params[2]))+(4-math.abs(tonumber(params[2])) % 4)
+	lengthY = math.abs(tonumber(params[3]))+(4-math.abs(tonumber(params[3])) % 4)
 else
 	xh = tonumber(params[1])
 	yh = tonumber(params[2])
@@ -162,7 +162,7 @@ function farm(invert)
 
 	k=0
 	
-for i=1,3 do
+for i=1,lenghtY/4-1 do
 	farmLineTorch(invert)
 	endLine()
 	farmLine()
@@ -215,7 +215,7 @@ end
 	forward("mine")
 	turtle.turnRight()
 
-for i=1,lenghtY-1 do
+for i=1,lengthY-1 do
 	forward("mine")
 end
 	
