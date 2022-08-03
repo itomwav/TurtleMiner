@@ -1,8 +1,16 @@
-local params = {...}
-xh = tonumber(params[1])
-yh = tonumber(params[2])
+lengthX = 16
+lengthY = 16
 
-function returnTurtle(c,s,r)
+local params = {...}
+if params[1] == "custom" then
+	lengthX = tonumber(params[2])
+	lengthY = tonumber(params[3])
+else
+	xh = tonumber(params[1])
+	yh = tonumber(params[2])
+end
+
+function returnTurtle(c,s,r) -- cobble, stone, rest
 
 turtle.turnRight()
 for i=1,c do
@@ -19,7 +27,7 @@ for i=1,r-s do
 forward("go")
 end
 empty()
-for i=1,15-r do
+for i=1,lengthX-1-r do
 forward("go")
 end
 turtle.turnRight()
@@ -53,31 +61,31 @@ end
 
 function goFarm(x, y)
 	if y == 0 then
-	for i=1, 16 * (x - 1) + 15 do
+	for i=1, lengthX * (x - 1) + (lengthX-1) do
 	forward("go")
 	end
 	turtle.down()
 	forward("safe")
 	else
-	for i=1, 16 * x do
+	for i=1, lengthX * x do
 	forward("go")
 	end
 	end
 	
 	if y < 0 then
 	turtle.turnLeft()
-	for i=1, 16 * (math.abs(y)-1) do
+	for i=1, lengthY * (math.abs(y)-1) do
 	forward("go")
 	print(i)
 	end
 	turtle.down()
 	forward("safe")
 	elseif y > 0 then
-	for i=1, 15 do
+	for i=1, lengthX-1 do
 	forward("go")
 	end
 	turtle.turnRight()
-	for i=1, 16 * math.abs(y) - 1 do
+	for i=1, lengthY * math.abs(y) - 1 do
 	forward("go")
 	end
 	turtle.down()
@@ -89,30 +97,30 @@ end
 function returnFarm(x,y)
 	if y == 0 then
 	turtle.turnLeft()
-	for i=1, 15 do
+	for i=1, lenghtY-1 do
 	forward("go")
 	end
 	turtle.turnRight()
-	for i=1, 16 * (x-1) + 15 do
+	for i=1, lengthX * (x-1) + (lengthX-1) do
 	forward("go")
 	end	
 	elseif y < 0 then
-	for i=1, 16 * math.abs(y) - 1 do
+	for i=1, lengthY * math.abs(y) - 1 do
 	forward("go")
 	print(i)
 	end
 	turtle.turnRight()
 	elseif y > 0 then
-	for i=1, 16 * (math.abs(y) - 1) do
+	for i=1, lengthY * (math.abs(y) - 1) do
 	forward("go")
 	end
 	turtle.turnLeft()
-	for i=1, 15 do
+	for i=1, lengthX-1 do
 	forward("go")
 	end
 	end
 	if y ~= 0 then
-	for i=1, 16 * x do
+	for i=1, lengthX * x do
 	forward("go")
 	end
 	end
@@ -120,7 +128,6 @@ end
 
 function startFarm()
 	
-	turtle.select(1)
 	turtle.turnRight()
 	turtle.turnRight()
 	turtle.select(15)
@@ -170,7 +177,7 @@ end
 
 function farmLine()
 	
-for i=1,15 do --eigentliche länge 15
+for i=1,lengthY-1 do --eigentliche länge 15
 	forward("mine")
 end
 
@@ -178,7 +185,7 @@ end
 	forward("mine")
 	turtle.turnRight()
 
-for i=1,15 do
+for i=1,lengthY-1 do
 	forward("mine")
 end
 
@@ -187,16 +194,16 @@ end
 function farmLineTorch(invert)
 	
 if invert then
-for i=1,15 do --eigentliche länge 15
-	if i == 4 or i == 8 or i == 12 or i == 16 then
+for i=1,lengthY-1 do --eigentliche länge 15
+	if i % 4 == 0 then -- i == 4 or i == 8 or i == 12 or i == 16
 	forward("torch")
 	else 
 	forward("mine")
 	end
 end
 else
-for i=1,15 do --eigentliche länge 15
-	if i == 1 or i == 5 or i == 9 or i == 13 then
+for i=1,lengthY-1 do --eigentliche länge 15
+	if (i+3) % 4 == 0 then -- i == 1 or i == 5 or i == 9 or i == 13
 	forward("torch")
 	else 
 	forward("mine")
@@ -208,7 +215,7 @@ end
 	forward("mine")
 	turtle.turnRight()
 
-for i=1,15 do
+for i=1,lenghtY-1 do
 	forward("mine")
 end
 	
@@ -263,10 +270,20 @@ end
   end
  end
 end
-				
-goFarm(xh,yh)
-startFarm()
-farm(yh < 0)
-endFarm()
-returnFarm(xh,yh)
-returnTurtle(1,11,13)
+
+if params[1] == "custom" then
+
+	startFarm()
+	farm()
+	endFarm()
+
+else 
+
+	goFarm(xh,yh)
+	startFarm()
+	farm(yh < 0)
+	endFarm()
+	returnFarm(xh,yh)
+	returnTurtle(1,11,13)
+
+end
