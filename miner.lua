@@ -15,10 +15,13 @@ if params[1] == "custom" then
 	end
 	print("Mining: X="..lengthX)
 	print("        Y="..lengthY)
+	print("Fuel: "..turtle.getFuelLevel())
 
 else
 	xh = tonumber(params[1])
 	yh = tonumber(params[2])
+	print("Mining Chunk: "..xh.." "..yh)
+	print("Fuel: "..turtle.getFuelLevel())
 end
 
 function returnTurtle(c,s,r) -- cobble, stone, rest
@@ -87,7 +90,6 @@ function goFarm(x, y)
 	turtle.turnLeft()
 	for i=1, lengthY * (math.abs(y)-1) do
 	forward("go")
-	print(i)
 	end
 	turtle.down()
 	forward("safe")
@@ -118,7 +120,6 @@ function returnFarm(x,y)
 	elseif y < 0 then
 	for i=1, lengthY * math.abs(y) - 1 do
 	forward("go")
-	print(i)
 	end
 	turtle.turnRight()
 	elseif y > 0 then
@@ -234,7 +235,6 @@ end
 end
 
 function endLine()
-	print("endLine")
 	k = k + 2
 	turtle.turnRight()
 for i=1,k - 1 do
