@@ -118,10 +118,14 @@ function returnFarm(x,y)
 	forward("go")
 	end	
 	elseif y < 0 then
+	turtle.turnLeft()
+	forward("go")
+	turtle.turnRight()
 	for i=1, lengthY * math.abs(y) - 1 do
 	forward("go")
 	end
 	turtle.turnRight()
+	forward("go")
 	elseif y > 0 then
 	for i=1, lengthY * (math.abs(y) - 1) do
 	forward("go")
