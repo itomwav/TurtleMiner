@@ -1,10 +1,24 @@
+function request()
+    rednet.send(2,"miner "..x.." "..y)
+    print("requested "..x.." "..y)
+end
+
+function mining()
+    map[x] = "mining"
+    print("mining "..x.." "..y)
+end
+
+function mined()
+    map[x] = {}
+    print("mined "..x.." "..y)
+end
+
 rednet.open("left")
 term.clear()
 term.setCursorPos(1,1)
 
 map = {}
 map[1] = {}
---table.insert(map,1,{})
 
 while true do
 local id,message,protocol = rednet.receive()
@@ -14,23 +28,19 @@ if protocol == "req" then
 
     if y == 0 then
         if string.find(tostring(map[x-1]),"table") then
-            rednet.send(2,"miner "..x.." "..y)
-            print("requested "..x.." "..y)
+            request()
         end
     elseif math.abs(y) == 1 then --wegen unsauberer Programmierung
         if string.find(tostring(map[x]),"table") then
-            rednet.send(2,"miner "..x.." "..y)
-            print("requested "..x.." "..y)
+            request()
         end
     elseif y < 0 then
         if map[x][y+1] == "mined" and map[x][y] ~= "mining" then
-            rednet.send(2,"miner "..x.." "..y)
-            print("requested "..x.." "..y)
+            request()
         end
     elseif y > 0 then
         if map[x][y-1] == "mined" and map[x][y] ~= "mining" then
-            rednet.send(2,"miner "..x.." "..y)
-            print("requested "..x.." "..y)
+            request()
         end
     end
 
@@ -38,26 +48,18 @@ elseif protocol == "mining" then
     x = tonumber(string.sub(message,0,string.find(message," ")-1))
     y = tonumber(string.sub(message,string.find(message," ")+1,string.len(message)))
     if y == 0 then 
-        map[x] = "mining"
-        --table.insert(map,x,"mining")
-        print("mining "..x.." "..y)
+        mining()
     else
-        map[x][y] = "mining"
-        --table.insert(map[x],y,"mining")
-        print("mining "..x.." "..y)
+        mining()
     end
 
 elseif protocol == "change" then
     x = tonumber(string.sub(message,0,string.find(message," ")-1))
     y = tonumber(string.sub(message,string.find(message," ")+1,string.len(message)))
     if y == 0 then 
-        map[x] = {}
-        --table.insert(map,x,{})
-        print("mined "..x.." "..y)
+        mined()
     else
-        table[x][y] = "mined"
-        --table.insert(map[x],y,"mined")
-        print("mined "..x.." "..y)
+        mined()
     end
 
 elseif protocol == "info" then
