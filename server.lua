@@ -12,20 +12,35 @@ if protocol == "req" then
 
     if y == 0 then
         if map[x-1] ~= nil then
-        print("mining "..x.." "..y)
+            rednet.send(2,"miner "..x.." "..y,4)
+            print("requested "..x.." "..y)
         end
     elseif math.abs(y) == 1 then --wegen unsauberer Programmierung
         if map[x] ~= "mining" and map[x] ~= nil then
-        print("mining "..x.." "..y)
+            rednet.send(2,"miner "..x.." "..y,4)
+            print("requested "..x.." "..y)
         end
     elseif y < 0 then
         if map[x][y+1] == "mined" and map[x][y] ~= "mining" then
-        print("mining "..x.." "..y)
+            rednet.send(2,"miner "..x.." "..y,4)
+            print("requested "..x.." "..y)
         end
     elseif y > 0 then
         if map[x][y-1] == "mined" and map[x][y] ~= "mining" then
-        print("mining "..x.." "..y)
+            rednet.send(2,"miner "..x.." "..y,4)
+            print("requested "..x.." "..y)
         end
+    end
+
+elseif protocol == "mining" then
+    x = tonumber(string.sub(message,0,string.find(message," ")-1))
+    y = tonumber(string.sub(message,string.find(message," ")+1,string.len(message)))
+    if y == 0 then 
+        table.insert(map,x,mining)
+        print("mining "..x.." "..y)
+    else
+        table.insert(map[x],y,"mining")
+        print("mining "..x.." "..y)
     end
 
 elseif protocol == "change" then
@@ -38,6 +53,12 @@ elseif protocol == "change" then
         table.insert(map[x],y,"mined")
         print("mined "..x.." "..y)
     end
+
+elseif protocol == "info" then
+    x = tonumber(string.sub(message,0,string.find(message," ")-1))
+    y = tonumber(string.sub(message,string.find(message," ")+1,string.len(message)))
+    print(map[x][y])
+
 else
     rednet.send(tonumber(protocol),message,tostring(id))
     term.clear()
