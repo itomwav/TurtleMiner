@@ -4,7 +4,6 @@ function request()
 end
 
 function mining()
-    map[x] = "mining"
     print("mining "..x.." "..y)
 end
 
@@ -47,8 +46,10 @@ elseif protocol == "mining" then
     x = tonumber(string.sub(message,0,string.find(message," ")-1))
     y = tonumber(string.sub(message,string.find(message," ")+1,string.len(message)))
     if y == 0 then 
+        map[x] = "mining"
         mining()
     else
+        map[x][y] = "mining"
         mining()
     end
 
