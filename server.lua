@@ -67,7 +67,11 @@ elseif protocol == "change" then
 elseif protocol == "info" then
     x = tonumber(string.sub(message,0,string.find(message," ")-1))
     y = tonumber(string.sub(message,string.find(message," ")+1,string.len(message)))
+    if x > #map then
+    print(nil)
+    else
     print(map[x][y])
+    end
 
 else
     rednet.send(tonumber(protocol),message,tostring(id))
