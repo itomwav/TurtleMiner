@@ -12,12 +12,12 @@ if protocol == "req" then
     y = tonumber(string.sub(message,string.find(message," ")+1,string.len(message)))
 
     if y == 0 then
-        if map[x-1] ~= nil then
+        if string.find(map[x-1],"table") then
             rednet.send(2,"miner "..x.." "..y)
             print("requested "..x.." "..y)
         end
     elseif math.abs(y) == 1 then --wegen unsauberer Programmierung
-        if map[x] ~= "mining" and map[x] ~= nil then
+        if string.find(map[xt],"table") then
             rednet.send(2,"miner "..x.." "..y)
             print("requested "..x.." "..y)
         end
