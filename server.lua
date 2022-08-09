@@ -1,5 +1,6 @@
 rednet.open("left")
 term.clear()
+term.setCursorPos(1,1)
 
 map = {}
 table.insert(map,1,{})
@@ -36,7 +37,7 @@ elseif protocol == "mining" then
     x = tonumber(string.sub(message,0,string.find(message," ")-1))
     y = tonumber(string.sub(message,string.find(message," ")+1,string.len(message)))
     if y == 0 then 
-        table.insert(map,x,mining)
+        table.insert(map,x,"mining")
         print("mining "..x.." "..y)
     else
         table.insert(map[x],y,"mining")
