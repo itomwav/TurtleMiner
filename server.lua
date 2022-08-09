@@ -9,7 +9,6 @@ function mining()
 end
 
 function mined()
-    map[x] = {}
     print("mined "..x.." "..y)
 end
 
@@ -57,8 +56,10 @@ elseif protocol == "change" then
     x = tonumber(string.sub(message,0,string.find(message," ")-1))
     y = tonumber(string.sub(message,string.find(message," ")+1,string.len(message)))
     if y == 0 then 
+        map[x] = {}
         mined()
     else
+        map[x][y] = "mined"
         mined()
     end
 
