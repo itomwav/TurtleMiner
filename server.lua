@@ -12,22 +12,22 @@ if protocol == "req" then
 
     if y == 0 then
         if map[x-1] ~= nil then
-            rednet.send(2,"miner "..x.." "..y,4)
+            rednet.send(2,"miner "..x.." "..y)
             print("requested "..x.." "..y)
         end
     elseif math.abs(y) == 1 then --wegen unsauberer Programmierung
         if map[x] ~= "mining" and map[x] ~= nil then
-            rednet.send(2,"miner "..x.." "..y,4)
+            rednet.send(2,"miner "..x.." "..y)
             print("requested "..x.." "..y)
         end
     elseif y < 0 then
         if map[x][y+1] == "mined" and map[x][y] ~= "mining" then
-            rednet.send(2,"miner "..x.." "..y,4)
+            rednet.send(2,"miner "..x.." "..y)
             print("requested "..x.." "..y)
         end
     elseif y > 0 then
         if map[x][y-1] == "mined" and map[x][y] ~= "mining" then
-            rednet.send(2,"miner "..x.." "..y,4)
+            rednet.send(2,"miner "..x.." "..y)
             print("requested "..x.." "..y)
         end
     end
