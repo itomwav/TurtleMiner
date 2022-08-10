@@ -82,11 +82,14 @@ elseif protocol == "info" then
     print(nil)
     rednet.send(3,"nil","infoBack")
     else
-    if x == #map and y == 0 and not map[x][1]==nil and not map[x][-1]==nil then
-        rednet.send(3,tostring(map[x]),"infoBack")
+    if y == 0 and string.find(tostring(map[x])) then
+        rednet.send(3,"mined","infoBack")
+    elseif not y == 0 then
+        print(map[x][y])
+        rednet.send(3,tostring(map[x][y]),"infoBack")
+    else
+        rednet.send(3,"mining","infoBack")
     end
-    print(map[x][y])
-    rednet.send(3,tostring(map[x][y]),"infoBack")
     end
 
 else
