@@ -2,12 +2,14 @@ function save(table,name)
     local file = fs.open(name,"w")
     file.write(textutils.serialize(table))
     file.close()
+    print("File saved as "..name..".")
 end
---save(map,"save1")
+
 function load(name)
     local file = fs.open(name,"r")
     local data = file.readAll()
     file.close()
+    print("File loaded as "..textutils.unserialize(data)..".")
     return textutils.unserialize(data)
 end
 
@@ -31,9 +33,6 @@ map = load("save1")
 rednet.open("left")
 term.clear()
 term.setCursorPos(1,1)
-
-map = {}
-map[1] = {}
 
 while true do
 local id,message,protocol = rednet.receive()
