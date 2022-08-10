@@ -33,12 +33,16 @@ if protocol == "req" then
             request()
         end
     elseif y < 0 then
+        if x <= #map then
         if map[x][y+1] == "mined" and map[x][y] ~= "mining" then
             request()
         end
+        end
     elseif y > 0 then
+        if x <= #map then
         if map[x][y-1] == "mined" and map[x][y] ~= "mining" then
             request()
+        end
         end
     end
 
@@ -46,22 +50,29 @@ elseif protocol == "mining" then
     x = tonumber(string.sub(message,0,string.find(message," ")-1))
     y = tonumber(string.sub(message,string.find(message," ")+1,string.len(message)))
     if y == 0 then 
+        if x <= (#map+1) then
         map[x] = "mining"
         mining()
+        end
     else
+        if x <= #map then
         map[x][y] = "mining"
         mining()
+        end
     end
 
-elseif protocol == "change" then
+elseif protocol == "mined" then
     x = tonumber(string.sub(message,0,string.find(message," ")-1))
     y = tonumber(string.sub(message,string.find(message," ")+1,string.len(message)))
+    
     if y == 0 then 
         map[x] = {}
         mined()
     else
+        if x <= #map then
         map[x][y] = "mined"
         mined()
+        end
     end
 
 elseif protocol == "info" then
