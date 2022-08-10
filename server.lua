@@ -9,7 +9,7 @@ function load(name)
     local file = fs.open(name,"r")
     local data = file.readAll()
     file.close()
-    print("File loaded as "..textutils.unserialize(data)..".")
+    print("File loaded as "..tostring(textutils.unserialize(data))..".")
     return textutils.unserialize(data)
 end
 
