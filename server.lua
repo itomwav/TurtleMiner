@@ -69,8 +69,13 @@ elseif protocol == "info" then
     y = tonumber(string.sub(message,string.find(message," ")+1,string.len(message)))
     if x > #map then
     print(nil)
+    rednet.send(3,"nil","infoBack")
     else
+    if x == #map and y == 0 and not map[x][1]==nil and not map[x][-1]==nil then
+        rednet.send(3,tostring(map[x]),"infoBack")
+    end
     print(map[x][y])
+    rednet.send(3,tostring(map[x][y]),"infoBack")
     end
 
 else
