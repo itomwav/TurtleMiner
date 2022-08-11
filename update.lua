@@ -12,3 +12,5 @@ if turtle == nil then
 else 
     get("miner.lua") --Turtle 
 end
+
+os.reboot()
