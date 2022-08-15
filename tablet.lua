@@ -2,17 +2,18 @@ rednet.open("back")
 
 function drawPixel(xx,yy)
 
-if x > #map then
+
+if xx-1 > #map then
 	status = nil
 else -- wenn es im möglichen Bereich ist:
-	if y == 0 then
-		if string.find(tostring(map[xx]),"table") then
-		status = mined
+	if yy-11 == 0 then
+		if string.find(tostring(map[xx-1]),"table") then
+		status = "mined"
 		else
-		status = map[xx]
+		status = map[xx-1]
 		end
 	else
-		status = map[xx][yy]
+		status = map[xx-1][yy-11]
 	end
 end
 		
@@ -27,21 +28,27 @@ if status == "mined" then
 end	
 end
 
+function updateScreen()
+
+	rednet.send(4,"complete","info")
+	id,map,protocol = rednet.receive("infoBack")
+	
+	term.clear()
+	for i=2,25 do
+	for j=3,19 do
+	
+		drawPixel(i,j)
+		
+	end
+	end
+
+end
+
 function drawMap()
 
 mode = "map"
 	
-rednet.send(4,"complete","info")
-id,map,protocol = rednet.receive("infoBack")
-
-term.clear()
-for i=2,25 do
-for j=3,19 do
-
-	drawPixel(i,j)
-	os.sleep(0.05)
-end
-end
+updateScreen()
 
 end
 
@@ -59,11 +66,11 @@ while true do
 			if button == 1 then
 			    rednet.send(4,(x-1).." "..(y-11),"req")
 			    os.sleep(0.5)
-			    drawPixel(x,y)
+			    updateScreen()
 			elseif button == 2 then
 			    rednet.send(4,(x-1).." "..(y-11),"mined")
 			    os.sleep(0.5)
-			    drawPixel(x,y)
+			    updateScreen()
 			end
 				
 		end
