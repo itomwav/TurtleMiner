@@ -16,7 +16,7 @@ end
 -------------------------------------
 
 function request()
-    rednet.send(2,"miner "..x.." "..y)
+    rednet.broadcast((x-1).." "..y,"miner")
     print("requested "..x.." "..y)
 end
 
@@ -96,23 +96,23 @@ elseif protocol == "mined" then
 
 elseif protocol == "info" then
     if message == "complete" then
-        rednet.send(3,map,"infoBack")
+        rednet.send(id,map,"infoBack")
     else
     x = tonumber(string.sub(message,0,string.find(message," ")-1))
     y = tonumber(string.sub(message,string.find(message," ")+1,string.len(message)))
     if x > #map then
     print(nil)
-    rednet.send(3,"nil","infoBack")
+    rednet.send(id,"nil","infoBack")
     else -- wenn es im möglichen Bereich ist:
     if y == 0 then
         if string.find(tostring(map[x]),"table") then
-        rednet.send(3,"mined","infoBack")
+        rednet.send(id,"mined","infoBack")
         else
-        rednet.send(3,map[x],"infoBack")
+        rednet.send(id,map[x],"infoBack")
         end
     else
         print(map[x][y])
-        rednet.send(3,tostring(map[x][y]),"infoBack")
+        rednet.send(id,tostring(map[x][y]),"infoBack")
     end
     end
     end

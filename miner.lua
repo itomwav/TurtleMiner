@@ -286,6 +286,22 @@ end
  end
 end
 
+if params[1] == "remote" then
+while true do 
+
+	id,message,protocol = rednet.receive("miner")
+
+    xh = tonumber(string.sub(message,0,string.find(message," ")-1))
+    yh = tonumber(string.sub(message,string.find(message," ")+1,string.len(message)))
+
+	goFarm(xh,yh)
+	startFarm()
+	farm(yh < 0)
+	endFarm()
+	returnFarm(xh,yh)
+	returnTurtle(1,11,13)
+end
+
 if params[1] == "custom" then
 
 	startFarm()
