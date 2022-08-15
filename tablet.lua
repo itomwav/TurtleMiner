@@ -17,7 +17,7 @@ else -- wenn es im möglichen Bereich ist:
 	end
 end
 		
-if status == "nil" then
+if status == nil then
 	paintutils.drawPixel(xx,yy,colors.gray)
 end
 if status == "mining" then
@@ -33,6 +33,8 @@ function updateScreen()
 	rednet.send(4,"complete","info")
 	id,map,protocol = rednet.receive("infoBack")
 	
+	term.setBackgroundColor(colors.black)
+	term.setTextColor(colors.white)
 	term.clear()
 	for i=2,25 do
 	for j=3,19 do
