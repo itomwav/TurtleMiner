@@ -95,6 +95,9 @@ elseif protocol == "mined" then
     save(map,"save1")
 
 elseif protocol == "info" then
+    if message == "complete" then
+        rednet.send(3,map,"infoBack")
+    else
     x = tonumber(string.sub(message,0,string.find(message," ")-1))
     y = tonumber(string.sub(message,string.find(message," ")+1,string.len(message)))
     if x > #map then
@@ -110,6 +113,7 @@ elseif protocol == "info" then
     else
         print(map[x][y])
         rednet.send(3,tostring(map[x][y]),"infoBack")
+    end
     end
     end
 

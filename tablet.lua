@@ -1,8 +1,20 @@
 rednet.open("back")
 
 function drawPixel(xx,yy)
-	rednet.send(4,(xx-1).." "..(yy-11),"info")
-id,status,protocol = rednet.receive("infoBack")
+
+if x > #map then
+	status = nil
+else -- wenn es im möglichen Bereich ist:
+	if y == 0 then
+		if string.find(tostring(map[xx]),"table") then
+		status = mined
+		else
+		status = map[xx]
+		end
+	else
+		status = map[xx][yy]
+	end
+end
 		
 if status == "nil" then
 	paintutils.drawPixel(xx,yy,colors.gray)
@@ -19,11 +31,15 @@ function drawMap()
 
 mode = "map"
 	
+rednet.send(4,"complete","info")
+id,map,protocol = rednet.receive("infoBack")
+
 term.clear()
 for i=2,25 do
 for j=3,19 do
-drawPixel(i,j)		
-os.sleep(0.05)
+
+	drawPixel(i,j)
+	os.sleep(0.05)
 end
 end
 
