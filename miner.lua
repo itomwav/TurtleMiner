@@ -300,6 +300,11 @@ while true do
 	endFarm()
 	returnFarm(xh,yh)
 	returnTurtle(1,11,13)
+
+	rednet.send(4,(xh+1).." "..(yh),"mined")
+	
+	os.sleep(1)
+
 end
 
 if params[1] == "custom" then
