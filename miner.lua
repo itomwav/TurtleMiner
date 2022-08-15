@@ -306,6 +306,7 @@ while true do
 	os.sleep(1)
 
 end
+end
 
 if params[1] == "custom" then
 
