@@ -21,6 +21,7 @@ elseif params[1] == "remote" then
 	rednet.open("right")
 else
 	xh = tonumber(params[1])
+	yh = tonumber(params[2])
 	print("Mining Chunk: "..xh.." "..yh)
 	print("Fuel: "..turtle.getFuelLevel())
 end
