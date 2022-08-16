@@ -22,7 +22,6 @@ elseif params[1] == "remote" then
 	direction = tostring(params[2])
 else
 	xh = tonumber(params[1])
-	yh = tonumber(params[2])
 	print("Mining Chunk: "..xh.." "..yh)
 	print("Fuel: "..turtle.getFuelLevel())
 end
@@ -35,12 +34,12 @@ loop = true
 		
 		local success,data = turtle.inspectDown()
 		if data.name == "minecraft:redstone_torch" then
-			if direction == data.state.facing then
+			if redstone.getInput("back") then
 			loop = false
 			else
 			tutle.turnRight()
 			end
-		elseif data.name == "minecraft:string" then
+		elseif data.name == "minecraft:tripwire" then
 			forward("go")
 		else
 			os.sleep(1)
