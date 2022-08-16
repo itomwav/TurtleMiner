@@ -1,6 +1,8 @@
 lengthX = 16
 lengthY = 16
 
+rednet.open("right")
+
 local params = {...}
 if params[1] == "custom" then
 	if math.abs(tonumber(params[2])) % 4 ~= 0 then
@@ -293,10 +295,10 @@ while true do
 
 	id,message,protocol = rednet.receive("miner")
 
-	rednet.send(4,message,"mining")
-
     xh = tonumber(string.sub(message,0,string.find(message," ")-1))
     yh = tonumber(string.sub(message,string.find(message," ")+1,string.len(message)))
+
+	rednet.send(4,(xh+1).." "..(yh),"mining")
 
 	goFarm(xh,yh)
 	startFarm()
