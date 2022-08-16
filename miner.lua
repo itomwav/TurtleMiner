@@ -1,8 +1,6 @@
 lengthX = 16
 lengthY = 16
 
-rednet.open("right")
-
 local params = {...}
 if params[1] == "custom" then
 	if math.abs(tonumber(params[2])) % 4 ~= 0 then
@@ -20,7 +18,7 @@ if params[1] == "custom" then
 	print("Fuel: "..turtle.getFuelLevel())
 
 elseif params[1] == "remote" then
-
+	rednet.open("right")
 else
 	xh = tonumber(params[1])
 	yh = tonumber(params[2])
