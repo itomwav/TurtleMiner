@@ -19,6 +19,7 @@ if params[1] == "custom" then
 
 elseif params[1] == "remote" then
 	rednet.open("right")
+	direction = tostring(params[2])
 else
 	xh = tonumber(params[1])
 	yh = tonumber(params[2])
@@ -26,11 +27,33 @@ else
 	print("Fuel: "..turtle.getFuelLevel())
 end
 
+function smartStart()
+
+loop = true
+
+	while loop do
+		
+		local success,data = turtle.inspectDown()
+		if data.name == "minecraft:redstone_torch" then
+			if direction == data.state.facing then
+			loop = false
+			else
+			tutle.turnRight()
+			end
+		elseif data.name == "minecraft:string" then
+			forward("go")
+		else
+			os.sleep(1)
+		end
+	end
+
+end
+
 function returnTurtle(c,s,r) -- cobble, stone, rest
 
 turtle.turnRight()
 for i=1,c do
-forward(go)
+forward("go")
 end
 empty("stone")
 for i=1,s-c do
@@ -290,6 +313,8 @@ end
 
 if params[1] == "remote" then
 while true do 
+
+	smartStart()
 
 	id,message,protocol = rednet.receive("miner")
 
