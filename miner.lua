@@ -302,11 +302,11 @@ while true do
 	startFarm()
 	farm(yh < 0)
 	endFarm()
-	returnFarm(xh,yh)
-	returnTurtle(1,11,13)
 
 	rednet.send(4,(xh+1).." "..(yh),"mined")
-	
+
+	returnFarm(xh,yh)
+	returnTurtle(1,11,13)
 	os.sleep(1)
 
 end
