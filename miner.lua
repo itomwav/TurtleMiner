@@ -17,6 +17,8 @@ if params[1] == "custom" then
 	print("        Y="..lengthY)
 	print("Fuel: "..turtle.getFuelLevel())
 
+elseif params[1] == "remote" then
+
 else
 	xh = tonumber(params[1])
 	yh = tonumber(params[2])
@@ -290,6 +292,8 @@ if params[1] == "remote" then
 while true do 
 
 	id,message,protocol = rednet.receive("miner")
+
+	rednet.send(4,message,"mining")
 
     xh = tonumber(string.sub(message,0,string.find(message," ")-1))
     yh = tonumber(string.sub(message,string.find(message," ")+1,string.len(message)))
