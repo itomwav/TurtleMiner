@@ -19,7 +19,6 @@ if params[1] == "custom" then
 
 elseif params[1] == "remote" then
 	rednet.open("right")
-	direction = tostring(params[2])
 else
 	xh = tonumber(params[1])
 	print("Mining Chunk: "..xh.." "..yh)
@@ -37,7 +36,7 @@ loop = true
 			if redstone.getInput("back") then
 			loop = false
 			else
-			tutle.turnRight()
+			turtle.turnRight()
 			end
 		elseif data.name == "minecraft:tripwire" then
 			forward("go")
