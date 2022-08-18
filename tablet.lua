@@ -81,6 +81,8 @@ while true do
 loop = true
 while loop do 
 
+	term.setBackgroundColor(colors.black)
+	term.setTextColor(colors.white)
 	term.clear()
 	buttons = {}
 	printHeading()
@@ -94,11 +96,39 @@ while loop do
 	updateScreen()
 	end
 
+	if mode == "table" then
+	typing = true
+	output = ""
+	term.setCursorBlink(true)
+	while typing do 
+		local event,key = os.pullEvent("key")
+	if key > 15 and key < 51 then
+	if key == 42 then
+	elseif key == 28 then
+	typing == false
+	else
+		output = output..tostring(keys.getName(key))
+	end
+	end
+	if key == 57 then 
+		output = output.." "
+	end
+	if key == 14 then
+		output = string.sub(output,1,string.len(output)-1)
+	end
+	term.setCursorPos(3,4)
+	term.setBackgroundColor(colors.black)
+	term.setTextColor(colors.white)
+	print(output)
+	end
+	term.setCursorBlink(false)
+	end
+
 	local event,button,x,y = os.pullEvent("mouse_click")
 
 	-- Allgemeine Drücker:
 	if x==25 and y==2 then
-	mode = menu
+	mode = "menu"
 	loop = false
 	end
 	if buttons[y] then
