@@ -93,46 +93,53 @@ while loop do
 	end
 
 	if mode == "map" then
-	updateScreen()
+		updateScreen()
 	end
 
 	if mode == "table" then
-	typing = true
-	output = ""
-	term.setCursorBlink(true)
-	while typing do 
-		local event,key = os.pullEvent("key")
-	if key > 15 and key < 51 then
-	if key == 42 then
-	elseif key == 28 then
-	typing == false
-	else
-		output = output..tostring(keys.getName(key))
-	end
-	end
-	if key == 57 then 
-		output = output.." "
-	end
-	if key == 14 then
-		output = string.sub(output,1,string.len(output)-1)
-	end
-	term.setCursorPos(3,4)
-	term.setBackgroundColor(colors.black)
-	term.setTextColor(colors.white)
-	print(output)
-	end
-	term.setCursorBlink(false)
+		typing = true
+		output = ""
+		while typing do 
+			local event,key = os.pullEvent("key")
+			if key > 1 and < 12 then
+				if key == 11 then
+					output = output.."0"
+				else
+					output = output..key-1
+				end
+			end
+			if key > 15 and key < 51 then
+				if key == 42 then
+				elseif key == 28 then
+					typing = false
+				else
+				output = output..tostring(keys.getName(key))
+				end
+			end
+			if key == 57 then 
+				output = output.." "
+			end
+			if key == 14 then
+				output = string.sub(output,1,string.len(output)-1)
+			end
+			term.setCursorPos(2,4)
+			term.setBackgroundColor(colors.black)
+			term.setTextColor(colors.white)
+			term.clearLine()
+			print(output)
+		end
 	end
 
 	local event,button,x,y = os.pullEvent("mouse_click")
 
 	-- Allgemeine Drücker:
 	if x==25 and y==2 then
-	mode = "menu"
-	loop = false
+		mode = "menu"
+		loop = false
 	end
+
 	if buttons[y] then
-	mode = buttons[y]
+		mode = buttons[y]
 	end
 
 	-- Bestimmte Drücker:
