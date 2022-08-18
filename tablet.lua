@@ -7,6 +7,8 @@ term.setCursorPos(2,2)
 term.clearLine()
 paintutils.drawLine(2,2,23,2,colors.white)
 term.setCursorPos(3,2)
+term.setBackgroundColor(colors.black)
+term.setTextColor(colors.white)
 print(" "..mode.." ")
 term.setCursorPos(25,2)
 term.setBackgroundColor(colors.red)
@@ -76,8 +78,10 @@ buttons = {}
 
 while true do
 
+loop = true
 while loop do 
 
+	term.clear()
 	buttons = {}
 	printHeading()
 
