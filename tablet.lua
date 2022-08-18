@@ -74,16 +74,18 @@ end
 
 mode = "menu"
 loop = true
+keyinput = false
 buttons = {}
 
 while true do
-typing = 0
 loop = true
 while loop do 
 
 	term.setBackgroundColor(colors.black)
 	term.setTextColor(colors.white)
 	term.clear()
+	term.setCursorBlink(false)
+	keyinput = false
 	buttons = {}
 	printHeading()
 
@@ -97,54 +99,27 @@ while loop do
 	end
 
 	if mode == "table" then
+		keyinput = true
+		term.setCursorPos(2,4)
+		term.setBackgroundColor(colors.black)
+		term.setTextColor(colors.white)
+		term.clearLine()
 		paintutils.drawLine(2,4,12,4,colors.gray)
 		term.setBackgroundColor(colors.blue)
-		term.setTextColor(colors.white)
 		term.setCursorPos(14,4)
 		print("Send")
-
-		output = ""
-		while typing == 1 do 
-			term.setCursorPos(2,4)
-			term.setBackgroundColor(colors.black)
-			term.setTextColor(colors.white)
-			term.clearLine()
-			paintutils.drawLine(2,4,12,4,colors.gray)
-			term.setBackgroundColor(colors.blue)
-			term.setCursorPos(14,4)
-			print("Send")
-			term.setCursorPos(2,4)
-			term.setBackgroundColor(colors.gray)
-			print(output)
-			term.setCursorBlink(true)
-			local event,key = os.pullEvent("key")
-			if key > 1 and key < 12 then
-				if key == 11 then
-					output = output.."0"
-				else
-					output = output..(key-1)
-				end
-			end
-			if key > 15 and key < 51 then
-				if key == 42 then
-				elseif key == 28 then
-					typing = 0
-				else
-				output = output..tostring(keys.getName(key))
-				end
-			end
-			if key == 57 then 
-				output = output.." "
-			end
-			if key == 14 then
-				output = string.sub(output,1,string.len(output)-1)
-			end
-			
-		end
-		term.setCursorBlink(false)
+		term.setCursorPos(2,4)
+		term.setBackgroundColor(colors.gray)
+		print(output)
+		term.setCursorPos(2+string.len(output),4)
+		term.setCursorBlink(true)
 	end
 
+	if keyinput then
+	local event,button,x,y = os.pullEvent()
+	else
 	local event,button,x,y = os.pullEvent("mouse_click")
+	end
 
 	-- Allgemeine Drücker:
 	if x==25 and y==2 then
@@ -159,14 +134,36 @@ while loop do
 	-- Bestimmte Drücker:
 
 	if mode == "table" then
-		if y == 4 and x<14 then 
-		typing = typing+1
-		if typing == 2 then 
-		typing = 0
+		if event == "mouse_click" then
+			if y == 4 and x > 13 then
+			term.setCursorPos(2,6)
+			print("Es wurde "..output.." gesendet.")
+			end
 		end
+		if event == "key" then
+			if button > 1 and button < 12 then
+				if button == 11 then
+					output = output.."0"
+				else
+					output = output..(key-1)
+				end
+			end
+			if button > 15 and button < 51 then
+				if button == 42 then
+				elseif button == 28 then
+					typing = 0
+				else
+				output = output..tostring(keys.getName(button))
+				end
+			end
+			if button == 57 then 
+				output = output.." "
+			end
+			if button == 14 then
+				output = string.sub(output,1,string.len(output)-1)
+			end
 		end
-	else
-		--send
+
 	end
 
 	if mode == "map" then 
