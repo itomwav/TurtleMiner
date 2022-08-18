@@ -105,8 +105,20 @@ while loop do
 
 		output = ""
 		while typing == 1 do 
+			term.setCursorPos(2,4)
+			term.setBackgroundColor(colors.black)
+			term.setTextColor(colors.white)
+			term.clearLine()
+			paintutils.drawLine(2,4,12,4,colors.gray)
+			term.setBackgroundColor(colors.blue)
+			term.setCursorPos(14,4)
+			print("Send")
+			term.setCursorPos(2,4)
+			term.setBackgroundColor(colors.gray)
+			print(output)
+			term.setCursorBlink(true)
 			local event,key = os.pullEvent("key")
-			if key > 1 and < 12 then
+			if key > 1 and key < 12 then
 				if key == 11 then
 					output = output.."0"
 				else
@@ -116,7 +128,7 @@ while loop do
 			if key > 15 and key < 51 then
 				if key == 42 then
 				elseif key == 28 then
-					typing = false
+					typing = 0
 				else
 				output = output..tostring(keys.getName(key))
 				end
@@ -127,18 +139,9 @@ while loop do
 			if key == 14 then
 				output = string.sub(output,1,string.len(output)-1)
 			end
-			term.setCursorPos(2,4)
-			term.setBackgroundColor(colors.gray)
-			term.setTextColor(colors.white)
-			term.clearLine()
-			paintutils.drawLine(2,4,12,4,colors.gray)
-			term.setBackgroundColor(colors.blue)
-			term.setCursorPos(14,4)
-			print("Send")
-			term.setCursorPos(2,4)
-			term.setBackgroundColor(colors.gray)
-			print(output)
+			
 		end
+		term.setCursorBlink(false)
 	end
 
 	local event,button,x,y = os.pullEvent("mouse_click")
@@ -156,7 +159,7 @@ while loop do
 	-- Bestimmte Drücker:
 
 	if mode == "table" then
-		if y == 4 and x>14 then 
+		if y == 4 and x<14 then 
 		typing = typing+1
 		if typing == 2 then 
 		typing = 0
