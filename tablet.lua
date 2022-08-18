@@ -77,7 +77,7 @@ loop = true
 buttons = {}
 
 while true do
-
+typing = 0
 loop = true
 while loop do 
 
@@ -97,15 +97,20 @@ while loop do
 	end
 
 	if mode == "table" then
-		typing = true
+		paintutils.drawLine(2,4,12,4,colors.gray)
+		term.setBackgroundColor(colors.blue)
+		term.setTextColor(colors.white)
+		term.setCursorPos(14,4)
+		print("Send")
+
 		output = ""
-		while typing do 
+		while typing == 1 do 
 			local event,key = os.pullEvent("key")
 			if key > 1 and < 12 then
 				if key == 11 then
 					output = output.."0"
 				else
-					output = output..key-1
+					output = output..(key-1)
 				end
 			end
 			if key > 15 and key < 51 then
@@ -123,9 +128,15 @@ while loop do
 				output = string.sub(output,1,string.len(output)-1)
 			end
 			term.setCursorPos(2,4)
-			term.setBackgroundColor(colors.black)
+			term.setBackgroundColor(colors.gray)
 			term.setTextColor(colors.white)
 			term.clearLine()
+			paintutils.drawLine(2,4,12,4,colors.gray)
+			term.setBackgroundColor(colors.blue)
+			term.setCursorPos(14,4)
+			print("Send")
+			term.setCursorPos(2,4)
+			term.setBackgroundColor(colors.gray)
 			print(output)
 		end
 	end
@@ -143,6 +154,17 @@ while loop do
 	end
 
 	-- Bestimmte Drücker:
+
+	if mode == "table" then
+		if y == 4 and x>14 then 
+		typing = typing+1
+		if typing == 2 then 
+		typing = 0
+		end
+		end
+	else
+		--send
+	end
 
 	if mode == "map" then 
 		
