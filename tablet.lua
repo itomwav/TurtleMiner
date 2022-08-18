@@ -1,8 +1,8 @@
 rednet.open("back")
 
 function printHeading()
-cursor.setBackgroundColor(colors.black)
-cursor.setTextColor(colors.white)
+term.setBackgroundColor(colors.black)
+term.setTextColor(colors.white)
 term.setCursorPos(2,2)
 term.clearLine()
 paintutils.drawLine(2,2,23,2,colors.white)
@@ -16,11 +16,11 @@ print("X")
 end
 
 function customButton(content,y)
-term.setCursorPos(1,y)
-cursor.setBackgroundColor(colors.gray)
-cursor.setTextColor(colors.white)
+term.setCursorPos(2,y)
+term.setBackgroundColor(colors.gray)
+term.setTextColor(colors.white)
 term.clearLine()
-term.setCursorPos(1,y)
+term.setCursorPos(2,y)
 print(content)
 buttons[y] = content
 end
@@ -60,9 +60,8 @@ function updateScreen()
 	
 	term.setBackgroundColor(colors.black)
 	term.setTextColor(colors.white)
-	term.clear()
 	for i=2,25 do
-	for j=3,19 do
+	for j=4,19 do
 	
 		drawPixel(i,j)
 		
@@ -72,11 +71,14 @@ function updateScreen()
 end
 
 mode = "menu"
+loop = true
+buttons = {}
 
 while true do
 
 while loop do 
 
+	buttons = {}
 	printHeading()
 
 	if mode == "menu" then
@@ -90,14 +92,13 @@ while loop do
 
 	local event,button,x,y = os.pullEvent("mouse_click")
 
-	buttons = {}
 	-- Allgemeine Drücker:
-	if x==25 and y==2
+	if x==25 and y==2 then
 	mode = menu
 	loop = false
 	end
 	if buttons[y] then
-	mode == buttons[y]
+	mode = buttons[y]
 	end
 
 	-- Bestimmte Drücker:
