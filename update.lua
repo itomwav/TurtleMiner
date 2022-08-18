@@ -1,6 +1,14 @@
+local params = {...}
+
+if params[1] then
+    branch = params[1]
+else
+    branch = "main"
+end
+
 function get(file)
 shell.run("rm", file)
-shell.run("wget", "https://github.com/itomwav/TurtleMiner/raw/main/"..file)
+shell.run("wget", "https://github.com/itomwav/TurtleMiner/raw/"..branch.."/"..file)
 end
 
 if turtle then 
