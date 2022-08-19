@@ -79,6 +79,7 @@ buttons = {}
 
 while true do
 loop = true
+output = ""
 while loop do 
 
 	term.setBackgroundColor(colors.black)
@@ -116,9 +117,9 @@ while loop do
 	end
 
 	if keyinput then
-	local event,button,x,y = os.pullEvent()
+	event,button,x,y = os.pullEvent()
 	else
-	local event,button,x,y = os.pullEvent("mouse_click")
+	event,button,x,y = os.pullEvent("mouse_click")
 	end
 
 	-- Allgemeine Drücker:
@@ -136,6 +137,8 @@ while loop do
 	if mode == "table" then
 		if event == "mouse_click" then
 			if y == 4 and x > 13 then
+			term.setBackgroundColor(colors.black)
+			term.setTextColor(colors.white)
 			term.setCursorPos(2,6)
 			print("Es wurde "..output.." gesendet.")
 			end
