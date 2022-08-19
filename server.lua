@@ -42,7 +42,7 @@ if protocol == "req" then
     y = tonumber(string.sub(message,string.find(message," ")+1,string.len(message)))
 
     if y == 0 then
-        if string.find(tostring(map[x-1]),"table") then
+        if string.find(tostring(map[x-1]),"table") and x == #map+1 then
             request()
         end
     elseif math.abs(y) == 1 then --wegen unsauberer Programmierung
