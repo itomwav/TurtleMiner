@@ -1,3 +1,6 @@
+saving = "saving"
+map = {}
+
 function save(table,name)
     local file = fs.open(name,"w")
     file.write(textutils.serialize(table))
@@ -27,8 +30,6 @@ end
 function mined()
     print("mined "..x.." "..y)
 end
-
-map = {}
 
 rednet.open("left")
 term.clear()
@@ -61,7 +62,7 @@ if protocol == "req" then
         end
         end
     end
-    save(map,"saving")
+    save(map,saving)
 
 elseif protocol == "mining" then
     x = tonumber(string.sub(message,0,string.find(message," ")-1))
@@ -77,7 +78,7 @@ elseif protocol == "mining" then
         mining()
         end
     end
-    save(map,"saving")
+    save(map,saving)
 
 elseif protocol == "mined" then
     x = tonumber(string.sub(message,0,string.find(message," ")-1))
@@ -92,7 +93,7 @@ elseif protocol == "mined" then
         mined()
         end
     end
-    save(map,"saving")
+    save(map,saving)
 
 elseif protocol == "info" then
     if message == "complete" then
