@@ -61,7 +61,7 @@ if protocol == "req" then
         end
         end
     end
-    save(map,"save")
+    save(map,"saving")
 
 elseif protocol == "mining" then
     x = tonumber(string.sub(message,0,string.find(message," ")-1))
@@ -77,7 +77,7 @@ elseif protocol == "mining" then
         mining()
         end
     end
-    save(map,"save")
+    save(map,"saving")
 
 elseif protocol == "mined" then
     x = tonumber(string.sub(message,0,string.find(message," ")-1))
@@ -92,7 +92,7 @@ elseif protocol == "mined" then
         mined()
         end
     end
-    save(map,"save")
+    save(map,"saving")
 
 elseif protocol == "info" then
     if message == "complete" then
@@ -119,7 +119,7 @@ elseif protocol == "info" then
 
 elseif protocol == "table" then
 if fs.exists(message) then
-    save = message
+    saving = message
     map = load(message)
     rednet.send(id,"loaded","table")
 else
@@ -127,8 +127,8 @@ else
 end
 
 elseif protocol == "createTable" then
-save = message
-map{}
+    saving = message
+map = {}
 
 else
     rednet.send(tonumber(protocol),message,tostring(id))

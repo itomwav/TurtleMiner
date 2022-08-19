@@ -111,7 +111,7 @@ while loop do
 	end
 
 	if mode == "loaded" then
-		mode = map
+		mode = "map"
 	end
 
 	if mode == "table" then
@@ -151,11 +151,11 @@ while loop do
 
 	if mode == "create" then
 	if y == 4 then
-		mode == menu
+		mode = "menu"
 	end
 	if y == 6 then
 		rednet.send(4,tableName,"createTable")
-		mode == menu
+		mode = "map"
 	end
 	end
 
