@@ -75,6 +75,7 @@ end
 mode = "menu"
 loop = true
 keyinput = false
+inputNeeded = true
 buttons = {}
 
 while true do
@@ -101,16 +102,17 @@ while loop do
 
 	if mode == "create" then
 		term.setCursorPos(2,4)
-		term.setBackgroundColor(colors.green)
+		term.setBackgroundColor(colors.red)
 		term.setTextColor(colors.white)
 		print("discard")
 		term.setCursorPos(2,6)
-		term.setBackgroundColor(colors.red)
+		term.setBackgroundColor(colors.green)
 		term.setTextColor(colors.white)
 		print("create")
 	end
 
 	if mode == "loaded" then
+		inputNeeded = false
 		mode = "map"
 	end
 
@@ -131,10 +133,12 @@ while loop do
 		term.setCursorBlink(true)
 	end
 
-	if keyinput then
-	event,button,x,y = os.pullEvent()
-	else
-	event,button,x,y = os.pullEvent("mouse_click")
+	if inputNeeded then
+		if keyinput then
+		event,button,x,y = os.pullEvent()
+		else
+		event,button,x,y = os.pullEvent("mouse_click")
+		end
 	end
 
 	-- Allgemeine Drücker:
@@ -173,7 +177,7 @@ while loop do
 				if button == 11 then
 					output = output.."0"
 				else
-					output = output..(key-1)
+					output = output..(button-1)
 				end
 			end
 			if button > 15 and button < 51 then
