@@ -99,6 +99,21 @@ while loop do
 		updateScreen()
 	end
 
+	if mode == "create" then
+		term.setCursorPos(2,4)
+		term.setBackgroundColor(colors.green)
+		term.setTextColor(colors.white)
+		print("discard")
+		term.setCursorPos(2,6)
+		term.setBackgroundColor(colors.red)
+		term.setTextColor(colors.white)
+		print("create")
+	end
+
+	if mode == "loaded" then
+		mode = map
+	end
+
 	if mode == "table" then
 		keyinput = true
 		term.setCursorPos(2,4)
@@ -134,13 +149,23 @@ while loop do
 
 	-- Bestimmte Drücker:
 
+	if mode == "create" then
+	if y == 4 then
+		mode == menu
+	end
+	if y == 6 then
+		rednet.send(4,tableName,"createTable")
+		mode == menu
+	end
+	end
+
 	if mode == "table" then
 		if event == "mouse_click" then
 			if y == 4 and x > 13 then
-			term.setBackgroundColor(colors.black)
-			term.setTextColor(colors.white)
-			term.setCursorPos(2,6)
-			print("Es wurde "..output.." gesendet.")
+			rednet.send(4,output,"table")
+			tableName = output
+			local id,message,protocol = rednet.receive("table")
+			mode = message
 			end
 		end
 		if event == "key" then

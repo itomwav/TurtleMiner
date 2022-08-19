@@ -28,7 +28,7 @@ function mined()
     print("mined "..x.." "..y)
 end
 
-map = load("save1")
+map = {}
 
 rednet.open("left")
 term.clear()
@@ -61,7 +61,7 @@ if protocol == "req" then
         end
         end
     end
-    save(map,"save1")
+    save(map,"save")
 
 elseif protocol == "mining" then
     x = tonumber(string.sub(message,0,string.find(message," ")-1))
@@ -77,7 +77,7 @@ elseif protocol == "mining" then
         mining()
         end
     end
-    save(map,"save1")
+    save(map,"save")
 
 elseif protocol == "mined" then
     x = tonumber(string.sub(message,0,string.find(message," ")-1))
@@ -92,7 +92,7 @@ elseif protocol == "mined" then
         mined()
         end
     end
-    save(map,"save1")
+    save(map,"save")
 
 elseif protocol == "info" then
     if message == "complete" then
@@ -116,6 +116,19 @@ elseif protocol == "info" then
     end
     end
     end
+
+elseif protocol == "table" then
+if fs.exists(message) then
+    save = message
+    map = load(message)
+    rednet.send(id,"loaded","table")
+else
+    rednet.send(id,"create","table")
+end
+
+elseif protocol == "createTable" then
+save = message
+map{}
 
 else
     rednet.send(tonumber(protocol),message,tostring(id))
