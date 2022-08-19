@@ -74,14 +74,15 @@ end
 
 mode = "menu"
 loop = true
-keyinput = false
-inputNeeded = true
 buttons = {}
 
 while true do
 loop = true
 output = ""
 while loop do 
+
+	keyinput = false
+	inputNeeded = true
 
 	term.setBackgroundColor(colors.black)
 	term.setTextColor(colors.white)
