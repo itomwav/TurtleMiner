@@ -44,8 +44,11 @@ function actions()
 while true do
 		
 produced = 0
-while produced == 0 do
+stop = 0
+while produced == 0 or stop > 5 do
 produced = math.floor(20*reactor.getEnergyProducedLastTick())
+stop = stop+1
+os.sleeep(0.01)
 end
 energy1 = reactor.getEnergyStored()
 
