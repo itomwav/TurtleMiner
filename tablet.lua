@@ -116,9 +116,43 @@ while loop do
 		term.setCursorPos(16,11)
 		print("grid")
 
-		paintutils.drawLine(6,8,6,13,colors.gray)
+		paintutils.drawLine(6,8,6,14,colors.gray)
 		paintutils.drawLine(6,11,13,11,colors.gray)
 
+		reactorX1 = {}
+		reactorY1 = {}
+		reactorX2 = {}
+		reactorY2 = {}
+
+		if energyProduced > 10 then --reactor
+		for i=1,4 do
+			reactorX1[i] = 6
+			reactorY1[i] = i+7
+		end
+		end
+		if energyOutputted > 10 then --grid
+			for i=5,11 do
+				reactorX1[i] = i+1
+				reactorY1[i] = 11
+			end
+		end
+		if energyChanged < 10 then --from battery
+			for i=1,4 do
+				reactorX2[i] = 6
+				reactorY2[i] = 15-i
+			end
+		end
+		if energyChanged > 10 then --to battery
+			for i=5,7 do
+				reactorX2[i] = 6
+				reactorY2[i] = i+11
+			end
+		end
+	for i=1,16 do
+		if reactorX1[i] then paintutils.drawPixel(reactorX1[i],reactorY1[i],colors.blue) end
+		if reactorX2[i] then paintutils.drawPixel(reactorX2[i],reactorY2[i],colors.blue) end
+		if reactorX1[i-3] then paintutils.drawPixel(reactorX1[i-3],reactorY1[i-3],colors.gray) end
+		if reactorX2[i-3] then paintutils.drawPixel(reactorX2[i-3],reactorY2[i-3],colors.gray) end
 	end
 
 	if mode == "map" then
