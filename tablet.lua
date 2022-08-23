@@ -84,7 +84,9 @@ function drawReactor()
 		term.setBackgroundColor(colors.black)
 		term.setTextColor(colors.white)
 		term.setCursorPos(12,17)
-		print((math.floor(message/1000000)/10).."%")
+		print("     ")
+		term.setCursorPos(12,17)
+		print((math.floor(message/10000)/10).."%")
 	for i=1,16 do
 		if reactorX1[i] then paintutils.drawPixel(reactorX1[i],reactorY1[i],colors.blue) end
 		if reactorX2[i] then paintutils.drawPixel(reactorX2[i],reactorY2[i],colors.blue) end
