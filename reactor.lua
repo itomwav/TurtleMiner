@@ -20,9 +20,12 @@ while true do
 	if string.find(message,"getReactorStats") then		
 	    produced = 0
 	    stop = 0
-		while produced == 0 or stop > 5 do
+		while produced == 0 do
 		produced = math.floor(20*reactor.getEnergyProducedLastTick())
 		stop = stop+1
+		if stop > 5 then
+		break
+		end
 		os.sleep(0.01)
 		end
 	    energy1 = reactor.getEnergyStored()
@@ -48,9 +51,12 @@ while true do
 		
 produced = 0
 stop = 0
-while produced == 0 or stop > 5 do
+while produced == 0 do
 produced = math.floor(20*reactor.getEnergyProducedLastTick())
 stop = stop+1
+if stop > 5 then
+break
+end
 os.sleep(0.01)
 end
 energy1 = reactor.getEnergyStored()
