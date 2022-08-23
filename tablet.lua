@@ -27,6 +27,79 @@ print(content)
 buttons[y] = content
 end
 
+function drawReactor()
+	paintutils.drawBox(2,4,10,6,colors.lightGray)    -- reactor
+		paintutils.drawBox(2,16,10,18,colors.lightGray)  -- battery
+		paintutils.drawBox(15,10,20,12,colors.lightGray) -- output
+		term.setBackgroundColor(colors.lightGray)
+		term.setTextColor(colors.black)
+		term.setCursorPos(3,5)
+		print("reactor")
+		term.setCursorPos(3,17)
+		print("battery")
+		term.setCursorPos(16,11)
+		print("grid")
+
+		paintutils.drawLine(6,8,6,14,colors.gray)
+		paintutils.drawLine(6,11,13,11,colors.gray)
+
+		rednet.send(4,"getReactorStats","5")
+		local id,message,protocol = rednet.receive("5")
+		energyProduced = tonumber(string.sub(message,0,string.find(message," ")-1))
+		energyChanged = tonumber(string.sub(message,string.find(message," ")+1,string.find(message," ",string.find(message," ")+1)))
+		energyOutputted = tonumber(string.sub(message,string.find(message," ",string.find(message," ")+1)+1,string.len(message)))
+
+		reactorX1 = {}
+		reactorY1 = {}
+		reactorX2 = {}
+		reactorY2 = {}
+
+		if energyProduced > 10 then --reactor
+		for i=1,4 do
+			reactorX1[i] = 6
+			reactorY1[i] = i+7
+		end
+		end
+		if energyOutputted > 10 then --grid
+			for i=5,11 do
+				reactorX1[i] = i+2
+				reactorY1[i] = 11
+			end
+		end
+		if energyChanged < 10 then --from battery
+			for i=1,4 do
+				reactorX2[i] = 6
+				reactorY2[i] = 15-i
+			end
+		end
+		if energyChanged > 10 then --to battery
+			for i=5,7 do
+				reactorX2[i] = 6
+				reactorY2[i] = i+7
+			end
+		end
+	while true do
+		rednet.send(4,"getReactorEnergy","5")
+		local id,message,protocol = rednet.receive("5")
+		term.setBackgroundColor(colors.black)
+		term.setTextColor(colors.white)
+		term.setCursorPos(12,17)
+		print((math.floor(message/1000000)/10).."%")
+	for i=1,16 do
+		if reactorX1[i] then paintutils.drawPixel(reactorX1[i],reactorY1[i],colors.blue) end
+		if reactorX2[i] then paintutils.drawPixel(reactorX2[i],reactorY2[i],colors.blue) end
+		if reactorX1[i-3] then paintutils.drawPixel(reactorX1[i-3],reactorY1[i-3],colors.gray) end
+		if reactorX2[i-3] then paintutils.drawPixel(reactorX2[i-3],reactorY2[i-3],colors.gray) end
+	os.sleep(0.01)
+	end
+end
+end
+
+function waitForClick()
+	inputNeeded = false
+	event,button,x,y = os.pullEvent("mouse_click")
+end
+
 function drawPixel(xx,yy)
 
 
@@ -99,65 +172,7 @@ while loop do
 	end
 
 	if mode == "reactor" then
-		paintutils.drawBox(2,4,10,6,colors.lightGray)    -- reactor
-		paintutils.drawBox(2,16,10,18,colors.lightGray)  -- battery
-		paintutils.drawBox(15,10,20,12,colors.lightGray) -- output
-		term.setBackgroundColor(colors.lightGray)
-		term.setTextColor(colors.black)
-		term.setCursorPos(3,5)
-		print("reactor")
-		term.setCursorPos(3,17)
-		print("battery")
-		term.setCursorPos(16,11)
-		print("grid")
-
-		paintutils.drawLine(6,8,6,14,colors.gray)
-		paintutils.drawLine(6,11,13,11,colors.gray)
-
-		rednet.send(4,"getReactorStats","5")
-		local id,message,protocol = rednet.receive("5")
-		energyProduced = tonumber(string.sub(message,0,string.find(message," ")-1))
-		energyChanged = tonumber(string.sub(message,string.find(message," ")+1,string.find(message," ",string.find(message," ")+1)))
-		energyOutputted = tonumber(string.sub(message,string.find(message," ",string.find(message," ")+1)+1,string.len(message)))
-
-		reactorX1 = {}
-		reactorY1 = {}
-		reactorX2 = {}
-		reactorY2 = {}
-
-		if energyProduced > 10 then --reactor
-		for i=1,4 do
-			reactorX1[i] = 6
-			reactorY1[i] = i+7
-		end
-		end
-		if energyOutputted > 10 then --grid
-			for i=5,11 do
-				reactorX1[i] = i+2
-				reactorY1[i] = 11
-			end
-		end
-		if energyChanged < 10 then --from battery
-			for i=1,4 do
-				reactorX2[i] = 6
-				reactorY2[i] = 15-i
-			end
-		end
-		if energyChanged > 10 then --to battery
-			for i=5,7 do
-				reactorX2[i] = 6
-				reactorY2[i] = i+7
-			end
-		end
-	while true do
-	for i=1,16 do
-		if reactorX1[i] then paintutils.drawPixel(reactorX1[i],reactorY1[i],colors.blue) end
-		if reactorX2[i] then paintutils.drawPixel(reactorX2[i],reactorY2[i],colors.blue) end
-		if reactorX1[i-3] then paintutils.drawPixel(reactorX1[i-3],reactorY1[i-3],colors.gray) end
-		if reactorX2[i-3] then paintutils.drawPixel(reactorX2[i-3],reactorY2[i-3],colors.gray) end
-	os.sleep(0.01)
-	end
-end
+	parallel.waitForAny(drawReactor,waitForClick)
 end
 
 	if mode == "map" then
