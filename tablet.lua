@@ -132,7 +132,7 @@ while loop do
 		end
 		if energyOutputted > 10 then --grid
 			for i=5,11 do
-				reactorX1[i] = i+1
+				reactorX1[i] = i+2
 				reactorY1[i] = 11
 			end
 		end
@@ -145,15 +145,19 @@ while loop do
 		if energyChanged > 10 then --to battery
 			for i=5,7 do
 				reactorX2[i] = 6
-				reactorY2[i] = i+11
+				reactorY2[i] = i+7
 			end
 		end
+	while true do
 	for i=1,16 do
 		if reactorX1[i] then paintutils.drawPixel(reactorX1[i],reactorY1[i],colors.blue) end
 		if reactorX2[i] then paintutils.drawPixel(reactorX2[i],reactorY2[i],colors.blue) end
 		if reactorX1[i-3] then paintutils.drawPixel(reactorX1[i-3],reactorY1[i-3],colors.gray) end
 		if reactorX2[i-3] then paintutils.drawPixel(reactorX2[i-3],reactorY2[i-3],colors.gray) end
+	os.sleep(0.01)
 	end
+end
+end
 
 	if mode == "map" then
 		updateScreen()
