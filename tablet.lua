@@ -99,11 +99,6 @@ while loop do
 	end
 
 	if mode == "reactor" then
-		rednet.send(4,"getReactorStats","5")
-		local id,message,protocol = rednet.receive("5")
-		energyProduced = tonumber(string.sub(message,0,string.find(message," ")-1))
-		energyChanged = tonumber(string.sub(message,string.find(message," ")+1,string.find(message," ",string.find(message," ")+1)))
-		energyOutputted = tonumber(string.sub(message,string.find(message," ",string.find(message," ")+1)+1,string.len(message)))
 		paintutils.drawBox(2,4,10,6,colors.lightGray)    -- reactor
 		paintutils.drawBox(2,16,10,18,colors.lightGray)  -- battery
 		paintutils.drawBox(15,10,20,12,colors.lightGray) -- output
@@ -118,6 +113,12 @@ while loop do
 
 		paintutils.drawLine(6,8,6,14,colors.gray)
 		paintutils.drawLine(6,11,13,11,colors.gray)
+
+		rednet.send(4,"getReactorStats","5")
+		local id,message,protocol = rednet.receive("5")
+		energyProduced = tonumber(string.sub(message,0,string.find(message," ")-1))
+		energyChanged = tonumber(string.sub(message,string.find(message," ")+1,string.find(message," ",string.find(message," ")+1)))
+		energyOutputted = tonumber(string.sub(message,string.find(message," ",string.find(message," ")+1)+1,string.len(message)))
 
 		reactorX1 = {}
 		reactorY1 = {}
