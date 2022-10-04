@@ -1,7 +1,13 @@
 local params = {...}
 
 if params[1] then
+    if params[1] == "update" then
+    shell.run("rm", "update.lua")
+    shell.run("wget", "https://github.com/itomwav/TurtleMiner/raw/main/update")
+    os.reboot()
+    else
     branch = params[1]
+    end
 else
     branch = "main"
 end
@@ -12,11 +18,11 @@ shell.run("wget", "https://github.com/itomwav/TurtleMiner/raw/"..branch.."/"..fi
 end
 
 if turtle then 
-    get("miner.lua") --Turtle 
+    get("turtle/miner.lua") --Turtle 
 elseif pocket then
-    get("tablet.lua") --Tablet
+    get("tablet/tablet.lua") --Tablet
 else 
-    get("server.lua") --Server
+    get("computer/server.lua") --Server
 end
 
 os.reboot()
