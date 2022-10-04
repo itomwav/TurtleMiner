@@ -12,17 +12,18 @@ else
     branch = "main"
 end
 
-function get(file)
+function get(path,file)
 shell.run("rm", file)
-shell.run("wget", "https://github.com/itomwav/TurtleMiner/raw/"..branch.."/"..file)
+shell.run("wget", "https://github.com/itomwav/TurtleMiner/raw/"..branch.."/"..path.."/"..file)
 end
 
 if turtle then 
-    get("turtle/miner.lua") --Turtle 
+    get("turtle","miner.lua") --Turtle 
 elseif pocket then
-    get("tablet/tablet.lua") --Tablet
+    get("tablet","tablet.lua") --Tablet
 else 
-    get("computer/server.lua") --Server
+    get("computer","server.lua") --Server
 end
 
+os.sleep(1)
 os.reboot()
