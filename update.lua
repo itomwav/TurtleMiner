@@ -3,7 +3,7 @@ local params = {...}
 if params[1] then
     if params[1] == "update" then
     shell.run("rm", "update.lua")
-    shell.run("wget", "https://github.com/itomwav/TurtleMiner/raw/main/update")
+    shell.run("wget", "https://github.com/itomwav/TurtleMiner/raw/main/update.lua")
     os.reboot()
     else
     branch = params[1]
