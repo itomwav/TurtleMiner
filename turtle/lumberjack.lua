@@ -6,15 +6,15 @@ end
 
 dis = 0
 
+farming = true
+while farming do
 local success,data = turtle.inspectDown()
-if succes then
 	if data.name == "minecraft:bone_block" then
          --baum erkennen
 		turtle.turnRight()
         local success,data = turtle.inspect()
-        if success then
             if data.name == "minecraft:log" then
-            turlte.dig()
+            turtle.dig()
             turtle.forward()
             tree = true
             height = 0
@@ -44,11 +44,10 @@ if succes then
         end
         turtle.turnRight()
         turtle.turnRight()
+        farming = false
 	else
 		turtle.forward()
         dis = dis + 1  
     end
     end
-end
-
 end
