@@ -31,11 +31,10 @@ local success,data = turtle.inspectDown()
                 turtle.down()
             end
             turtle.back()
-            turtle.turnLeft()
-            turtle.forward()
-            dis = dis + 1  
         end
-        
+        turtle.turnLeft()
+        turtle.forward()
+        dis = dis + 1 
 	elseif data.name == "minecraft:wool" then
 		turtle.turnRight()
         turtle.turnRight()
