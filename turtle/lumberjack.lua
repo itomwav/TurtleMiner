@@ -34,7 +34,7 @@ local success,data = turtle.inspectDown()
             turtle.forward()
         end
         turtle.turnLeft()
-        turtle.turnLeft()
+        turtle.forward()
         line = false
 	else
 		turtle.forward()
@@ -43,9 +43,11 @@ local success,data = turtle.inspectDown()
 end
 
 function changeLine()
+while searching do
 local success,data = turtle.inspectDown()
 	if data.name == "minecraft:stained_hardened_clay" then
         turtle.turnLeft()
+        searching = false
     elseif data.name == "minecraft:wool" then
         turtle.turnLeft()
         turtle.turnLeft()
@@ -54,10 +56,12 @@ local success,data = turtle.inspectDown()
         end
         turtle.turnRight()
         farming = false
+        searching = false
     else
         turtle.forward()
         dis2 = dis2 + 1
     end
+end
 end
 
 function farmLine()
@@ -65,12 +69,6 @@ function farmLine()
     while line do
         checkBlock()
     end
-
-    for dis do 
-        checkBlock()
-    end
-    turtle.turnLeft()
-    turtle.forward()
 end
 
 -- Code --
@@ -82,10 +80,12 @@ while not redstone.getInput("back") do
 end
 
 dis = 0
+dis2 = 0
 
 farming = true
 while farming do
 farmLine()
+searching = true
 changeLine()
 end
 
