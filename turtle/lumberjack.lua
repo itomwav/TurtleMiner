@@ -30,7 +30,7 @@ local success,data = turtle.inspectDown()
 	elseif data.name == "minecraft:wool" then
 		turtle.turnLeft()
         turtle.turnLeft()
-        for i=0,dis do
+        for i=0,dis - 1 do
             turtle.forward()
         end
         turtle.turnLeft()
@@ -51,7 +51,7 @@ local success,data = turtle.inspectDown()
     elseif data.name == "minecraft:wool" then
         turtle.turnLeft()
         turtle.turnLeft()
-        for i=0,dis2 do
+        for i=0,dis2 + 1 do
             turtle.forward()
         end
         turtle.turnRight()
@@ -75,15 +75,18 @@ end
 
 while true do
 
-while not redstone.getInput("back") do
+while not redstone.getInput("back") or turtle.getFuelLevel()<1000 do
     os.sleep(1)
 end
 
-dis = 0
+turtle.select(1)
+turtle.suckDown()
+
 dis2 = 0
 
 farming = true
 while farming do
+dis = 0
 farmLine()
 searching = true
 changeLine()
